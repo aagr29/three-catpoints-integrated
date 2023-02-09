@@ -62,5 +62,63 @@ app.get("/get_coordinates", function (req, res) {
       z: array_z_coordinate,
     });
 });
+// "https://feature-detection.virtual-tas-pipeline.real-time.community/api/worker/catenary/construct?key=AIzaSyBhmSYn1IaOu88QgC2kZ7ae0g0325czLyU&usr=test&pwd=test"
 
+async function getCatenaryPoints(payload) {
+  const response = await fetch(
+    "http://localhost:80/jsonpayload",
+    {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(payload),
+    }
+  );
 
+  if (!response.ok) {
+    throw new Error(`HTTP error! status: ${response.status}`);
+  }
+
+  const data_res = await response.json();
+  // return data_res.catPoints;
+  return data_res
+}
+// """{"name":"Adrian","point1":[1.0,0.0,1.0],"point2":[5.5,0.0,0.80],"point3":[10.0,0.0,1.0],"end1":[0.0,0.0],"end2":[13.0,0.0]}"""
+// {"name":"Adrian", "thetas":[0.0,0.0], "centreXs":[0.0,0.0], "centreYs":[0.0,0.0], "centreZs":[0.0,0.0],"lmins":[-10.0,-10.0],"lmaxs": [10.0,10.0],"alphas": [100.0, 100.0]}
+let payload;
+// payload= {name:"Adrian",points:[[534361.0,5212505.0,100.0], [534361.0,5212505.0,90.0]],probs:[1.0,0.5],DTMSourceGS:"gs://eq-c2rw-research/04092022_1_and_03092022_1_processing/DTM/"}
+// payload={name:"Adrian", thetas:[0.0,0.0], centreXs:[0.0,0.0], centreYs:[0.0,0.0], centreZs:[0.0,0.0],lmins:[-10.0,-10.0],lmaxs: [10.0,10.0],alphas: [100.0, 100.0]}
+// payload={name:"Adrian", theta:0.0, centreX:0.0, centreY:0.0, centreZ:0.0,lmin:-10.0,lmax: 10.0,alpha: 100.0}
+//Initialise a project by downloading the Network Detection output model to the server's SQL database ready to be queried
+// payload={name:"Adrian",project:"Testing",bigQuerySource:"eq-c2rw-research.manualNetworkBuilderTestInput",backupGSPath:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/backupGSPath/"}
+// Request plotting information for poles and conductors which make up a given bay (via Bay Id) also gives the plotting information for all nearby wires so that operator can see if a bay attached to this one has not been modelled (a bay entered by another operator on the same server will also be returned)
+// payload={name:"Adrian",infoForBayId: 3528, project:"Testing",bayCreator:"InputDatabase",DTMSourceGS:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/"}
+// Model details for all poles within a bounding box
+// payload={name:"Adrian",project:"Testing",polesXMin:525000.1,polesXMax:525425.0,polesYMin:5226000.0,polesYMax:5227500.0,DTMSourceGS:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/"}
+//Model details for all conductors within a bounding box
+// payload={name:"Adrian",project:"Testing",conductorsXMin:525703,conductorsXMax:526500,conductorsYMin:5226000.0,conductorsYMax:5226581.526,DTMSourceGS:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/"}
+//Get latest used bayId, siteId, conductorId, poleId in the loacl database for a given user
+// payload={name:"Adrian",project:"Testing",getIdsForUser:"InputDatabase"}
+//delete a catenary
+// payload={name:"Adrian",project:"Testing",  deleteCat:101}
+//Replace a catenary
+// payload={name:"Adrian",project:"Testing", replaceCat:101, theta:0.0, centreX:0.0, centreY:0.0, centreZ:0.0,lmin:-10.0,lmax: 10.0,alpha: 100.0, DTMSourceGS:"gs://pathToDTMFiles/"}
+// Build a Catenary for plotting from three points on it plus the pole positions
+// payload={name:"Adrian",point1:[1.0,0.0,1.0],point2:[5.5,0.0,0.80],point3:[10.0,0.0,1.0],end1:[0.0,0.0],end2:[13.0,0.0],points:[[0.14205182496663768, 0.1416422571787171, 1.289745124140968], [1.4386806338732994, 0.08171185677596166, 0.9968232823854244], [2.606386932650505, 0.14524071584300963, 0.9091032145129639], [3.9024174722867477, 0.05100926825328858, 0.836107831994011], [5.2, 0.0, 0.8008888888888884], [0.18452639447233454, 0.016481756363204546, 0.12598245516955564], [6.628501806586528, 0.06232067652426459, 0.912815666366341], [7.991125030444873, 0.006444662550676661, 0.893470094909051], [9.295854230022295, 0.06958201296267601, 1.0863089765693248], [10.44955441877392, 0.18160986267224682, 1.0861536377990944], [11.831377163634771, 0.08944660591696114, 1.3384475677288492], [13.17625843207497, 0.08630473695477231, 1.4782954519065932]],probs:[0.5,0.3,1.0,0.5,1.0,1.0,1.0,0.5,0.5,0.3,1.0,0.5]}
+
+payload={name:"Adrian",project:"Testing",point1:[534361.0,5212505.0,100.0],point2:[534361.0,5212505.2,91.0],points:[[534361.0,5212505.0,100.0], [534361.0,5212505.0,90.0], [534361.2,5212505.0,95.0],[534361.0,5212505.2,91.0]],probs:[1.0,0.5,0.8,0.7],gpsTimes:[23452435.346,23456123.346,23452435.346,23456123.346],DTMSourceGS:"gs://eq-c2rw-research/04092022_1_and_03092022_1_processing/DTM/"}
+console.log(JSON.stringify(payload))
+// payload = {
+  //   name: "Adrian",
+  //   point1: [1.0,0.0,1.0],
+  //   point2: [5.5,0.0,0.80],
+  //   point3: [10.0,0.0,1.0],
+  //   end1:[0.0,0.0],
+  //   end2: [13.0,0.0],
+  // };
+
+  let data1 = await getCatenaryPoints(payload);
+  console.log(data1)
+  // console.log(data1.catPoints)
+  
