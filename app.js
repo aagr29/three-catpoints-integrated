@@ -108,8 +108,20 @@ let payload;
 // payload={name:"Adrian",point1:[1.0,0.0,1.0],point2:[5.5,0.0,0.80],point3:[10.0,0.0,1.0],end1:[0.0,0.0],end2:[13.0,0.0],points:[[0.14205182496663768, 0.1416422571787171, 1.289745124140968], [1.4386806338732994, 0.08171185677596166, 0.9968232823854244], [2.606386932650505, 0.14524071584300963, 0.9091032145129639], [3.9024174722867477, 0.05100926825328858, 0.836107831994011], [5.2, 0.0, 0.8008888888888884], [0.18452639447233454, 0.016481756363204546, 0.12598245516955564], [6.628501806586528, 0.06232067652426459, 0.912815666366341], [7.991125030444873, 0.006444662550676661, 0.893470094909051], [9.295854230022295, 0.06958201296267601, 1.0863089765693248], [10.44955441877392, 0.18160986267224682, 1.0861536377990944], [11.831377163634771, 0.08944660591696114, 1.3384475677288492], [13.17625843207497, 0.08630473695477231, 1.4782954519065932]],probs:[0.5,0.3,1.0,0.5,1.0,1.0,1.0,0.5,0.5,0.3,1.0,0.5]}
 // a = HTTP.request("POST", "http://localhost:8000/jsonpayload", [("Content-Type", "application/json")], """{"name":"Adrian","infoForBayId": 3528, "project":"Testing","bayCreator":"InputDatabase","DTMSourceGS":"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/"}""")
 // a = HTTP.request("POST", "http://localhost:8000/jsonpayload", [("Content-Type", "application/json")], """{"name":"Adrian","project":"Testing","bigQuerySource":"eq-c2rw-research.manualNetworkBuilderTestInput","backupGSPath":"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/backupGSPath/"}""")
-payload={name:"Adrian",infoForBayId: 206, project:"Testing",bayCreator:"InputDatabase",DTMSourceGS:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/"}
+// payload={name:"Adrian",infoForBayId: 206, project:"Testing",bayCreator:"InputDatabase",DTMSourceGS:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/"}
 // payload={name:"Adrian",project:"Testing",bigQuerySource:"eq-c2rw-research.manualNetworkBuilderTestInput",backupGSPath:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/backupGSPath/"}
+
+
+
+
+
+
+payload = {name:"Adrian",project:"Testing",bigQuerySource:"eq-c2rw-research.manualNetworkBuilderTestInput",backupGSPath:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/backupGSPath/",DTMSourceGS:"gs://eq-c2rw-research/manualNetworkBuilder/dataForTests/DTM/", "sinkDataset": "eq-c2rw-research:manualCorrectedResultsTesting","polygon":[[-43.122079177932584, 147.29874553140093], [-43.12201234795895, 147.3233312485821], [-43.104002810880004, 147.3232364537733], [-43.104069599044145, 147.29865794440283], [-43.122079177932584, 147.29874553140093]],datum:"GDA94", zone:55, hemisphere:false}
+
+
+
+
+
 console.log(JSON.stringify(payload))
 // payload = {
   //   name: "Adrian",
@@ -120,7 +132,11 @@ console.log(JSON.stringify(payload))
   //   end2: [13.0,0.0],
   // };
 
-  let data1 = await getCatenaryPoints(payload);
+  let data1 =  await getCatenaryPoints(payload);
+  // let data2 =  await getCatenaryPoints(payload);
   console.log(data1)
+  // console.log(data2)
   // console.log(data1.catPoints)
+
+
   
